@@ -1,35 +1,45 @@
 package de.thm.mni.backend.user
 
-import de.thm.mni.backend.address.Address
+import de.thm.mni.backend.audiobook.Audiobook
+import de.thm.mni.backend.audiobook.BookOwnership
 import jakarta.persistence.*
 
 @Entity
 @Table(name = "users")
 class User {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    var id: Long? = null;
-    var firstName: String? = null;
-    var lastName: String? = null;
-    var email: String? = null;
-    var password: String? = null;
+  @Id
+  @GeneratedValue(strategy = GenerationType.AUTO)
+  var id: Long? = null
 
-    @OneToOne(
-        cascade = [(CascadeType.ALL)],
-        mappedBy = "user"
-    )
-    var address: Address? = null;
-    protected  constructor(){}
+  @Column(name = "first_name", nullable = false)
+  var firstName: String? = null
 
-    public  constructor(
-        firstName:String,
-        lastName:String,
-        email:String,
-        password:String
-    ){
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.email = email;
-        this.password = password;
-    }
+  @Column(name = "last_name", nullable = false)
+  var lastName: String? = null
+
+  @Column(unique = true)
+  var email: String? = null
+
+  @Embedded
+  var address: Address? = null
+
+  @OneToMany(
+    cascade = [CascadeType.ALL],
+    mappedBy = "user"
+  )
+  var audiobooks: MutableList<BookOwnership> = mutableListOf()
+
+  // JPA requires a default constructor
+  protected constructor() {}
+
+  public constructor(firstName: String, lastName: String, email: String, address: Address) {
+    this.firstName = firstName
+    this.lastName = lastName
+    this.email = email
+    this.address = address
+  }
+
+  fun addAudiobook(audiobook: Audiobook) {
+    audiobooks.add(BookOwnership(this, audiobook))
+  }
 }

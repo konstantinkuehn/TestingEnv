@@ -22,7 +22,9 @@ class AudiobookService (private val audiobookRepository: AudiobookRepository) {
         // die fehlerfälle kann man auch im nachinein machen!
     }
 
-
+fun findAll(): List<Audiobook> {
+    return audiobookRepository.findAll().toList()  ;
+}
 
     fun findByID(id :Long)  : Optional<Audiobook> {
         return audiobookRepository.findById(id);

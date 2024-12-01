@@ -13,7 +13,10 @@ class AudiobookController (private val audiobookService: AudiobookService){
 
         return  audiobookService.create(audiobook);
     }
-
+    @GetMapping("/audiobooks")
+    fun getAudiobook(): List<Audiobook> {
+        return  audiobookService.findAll();
+    }
 
     @GetMapping("/audiobook")
     fun getAudiobook(@PathVariable id: Long): Optional<Audiobook> {

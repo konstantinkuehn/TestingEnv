@@ -8,7 +8,7 @@ class CourseService  (private val courseRepository: CourseRepository) {
     fun create(course: Course): Course {
         // Fehlerfälle
         //Prüfen ob Titel enthalten ist
-        if(course.name == null){
+        if(course.title == null){
             throw IllegalArgumentException("A Course requires a name");
         }
         //Prüfen ob Beschreibung enthalten ist

@@ -5,23 +5,28 @@ import jakarta.persistence.*
 
 @Entity
 @Table(name = "courses")
-class Course (){
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    var id:Long?=null
+class Course {
+  @Id
+  @GeneratedValue(strategy = GenerationType.AUTO)
+  var id: Long? = null
+  var title: String? = null
+  var description: String? = null
 
-    var name: String? = null
-    var description: String? = null
-    @ManyToMany
-    @JoinTable(
-        name = "pariticpants_courses",
-        joinColumns = [JoinColumn(name = "course_id")],
-        inverseJoinColumns = [JoinColumn(name = "user_id")]
-    )
-    var paticipants:MutableList<User> = mutableListOf();
-    public  constructor(name:String, description:String):this(){
-        this.name = name;
-        this.description = description;
-    }
+  @ManyToMany
+  @JoinTable(
+    name = "course_participants",
+    joinColumns = [JoinColumn(name = "course_id")],
+    inverseJoinColumns = [JoinColumn(name = "user_id")]
+  )
+  var participants: MutableList<User> = mutableListOf()
 
+  protected constructor() {}
+
+  public constructor(
+    title: String,
+    description: String,
+  ) {
+    this.title = title
+    this.description = description
+  }
 }

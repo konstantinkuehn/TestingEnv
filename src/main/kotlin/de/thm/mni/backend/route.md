@@ -8,10 +8,11 @@ List
 /audiobooks/
 /courses/
 /user/:id/audiobooks
-/audiobook/:id/users
 /user/:id/courses/
-/course/:id/users
 
+
+/course/:id/users
+/audiobook/:id/users
 
 Secondary_
 
